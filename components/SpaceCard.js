@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import { RiEarthLine, RiEarthFill } from 'react-icons/ri';
-import { useState } from 'react';
+import { FiHeart } from 'react-icons/fi';
+import { FaHeart } from 'react-icons/fa';
 
-const SpaceCard = ({ pic, addFav, like, date, media_type, title, url, thumbnail_url, explanation }) => {
+const SpaceCard = ({ pic, addFav, removeFav, date, media_type, title, url, thumbnail_url, explanation, icon }) => {
 	return (
 		<div className={styles.card}>
 			<a href={url} target="_blank" rel="noopener noreferrer">
@@ -22,7 +22,16 @@ const SpaceCard = ({ pic, addFav, like, date, media_type, title, url, thumbnail_
 			</a>
 			<div className={styles.cardTitle}>
 				<h4>{title}</h4>
-				<div onClick={() => addFav(pic)}>{like ? <RiEarthFill /> : <RiEarthLine />}</div>
+
+				{icon ? (
+					<div onClick={() => removeFav(title, date)}>
+						<FaHeart />
+					</div>
+				) : (
+					<div onClick={() => addFav(pic)}>
+						<FiHeart />
+					</div>
+				)}
 			</div>
 			<p className={styles.explanation}>{explanation}</p>
 			<div className={styles.date}>{date.split('-').join('/')}</div>
