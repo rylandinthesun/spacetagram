@@ -1,3 +1,11 @@
 module.exports = {
-  reactStrictMode: true,
-}
+	reactStrictMode : true,
+
+	images          : {
+		domains : [
+			'apod.nasa.gov',
+			'img.youtube.com',
+			'www.youtube.com'
+		]
+	}
+};
