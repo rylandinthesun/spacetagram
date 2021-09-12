@@ -75,11 +75,7 @@
 
 .title span {
 	font-weight: 900;
-	background-image: url("https://assets.newatlas.com/dims4/default/b89cd58/2147483647/strip/true/crop/925x617+0+232/resize/1200x800!/quality/90/?url=http%3A%2F%2Fnewatlas-brightspot.s3.amazonaws.com%2Farchive%2Fchandra-nasa-space-telescope-anniversary-4.jpg");
-	background-repeat: repeat;
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	color: darkslateblue;
 }
 
 .title,

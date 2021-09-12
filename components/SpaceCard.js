@@ -13,7 +13,6 @@ const SpaceCard = ({
 	context,
 	handleAdd,
 	handleRemove,
-	icon,
 	liked
 }) => {
 	return (
