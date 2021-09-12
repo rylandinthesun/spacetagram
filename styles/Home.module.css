@@ -97,7 +97,7 @@
 }
 
 .description {
-	line-height: 1.5;
+	line-height: 1;
 	font-size: 1.5rem;
 }
 
@@ -109,7 +109,7 @@
 
 .grid {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: center;
 	flex-wrap: wrap;
 	max-width: 1400px;
@@ -225,6 +225,11 @@
 
 .footer a:hover {
 	filter: brightness(65%);
+}
+
+.backTopBtn {
+	position: absolute;
+	right: 30px;
 }
 
 @media (max-width: 600px) {

@@ -5,10 +5,11 @@ import SpaceList from '../components/SpaceList';
 import styles from '../styles/Home.module.css';
 
 export default function Home ({ data }) {
+	const INITIAL_STATE = data;
 	const [
-		pictures,
-		setPictures
-	] = useState(data);
+		spaceData,
+		setSpaceData
+	] = useState(INITIAL_STATE);
 
 	const [
 		spaceFavs,
@@ -45,32 +46,32 @@ export default function Home ({ data }) {
 				...spaceFavs,
 				item
 			];
-			const objIdx = pictures.findIndex((obj) => obj.title == item.title);
-			const updatedObj = { ...pictures[objIdx], liked: true };
+			const objIdx = spaceData.findIndex((obj) => obj.title == item.title);
+			const updatedObj = { ...spaceData[objIdx], liked: true };
 			const newPicFav = [
-				...pictures.slice(0, objIdx),
+				...spaceData.slice(0, objIdx),
 				updatedObj,
-				...pictures.slice(objIdx + 1)
+				...spaceData.slice(objIdx + 1)
 			];
 			setSpaceFavs(newFav);
 			saveToLocalStorage(newFav);
-			setPictures(newPicFav);
+			setSpaceData(newPicFav);
 		}
 	};
 
 	const removeFav = (item) => {
 		const newFav = spaceFavs.filter((f) => f.title !== item.title && f.date !== item.date);
-		const objIdx = pictures.findIndex((obj) => obj.title == item.title);
-		const updatedObj = { ...pictures[objIdx], liked: false };
+		const objIdx = spaceData.findIndex((obj) => obj.title == item.title);
+		const updatedObj = { ...spaceData[objIdx], liked: false };
 		const newPicFav = [
-			...pictures.slice(0, objIdx),
+			...spaceData.slice(0, objIdx),
 			updatedObj,
-			...pictures.slice(objIdx + 1)
+			...spaceData.slice(objIdx + 1)
 		];
 
 		setSpaceFavs(newFav);
 		saveToLocalStorage(newFav);
-		setPictures(newPicFav);
+		setSpaceData(newPicFav);
 	};
 
 	const getMoreItems = async () => {
@@ -80,8 +81,8 @@ export default function Home ({ data }) {
 				'https://api.nasa.gov/planetary/apod?api_key=bwQwkRMCuNfINAZVluomxyUm0cTSPSKdIAbZwtoA&count=9&thumbs=true'
 			);
 			const data = await res.json();
-			const newItems = pictures.concat(data);
-			setPictures(newItems);
+			const newItems = spaceData.concat(data);
+			setSpaceData(newItems);
 			setLoading(false);
 		} catch (e) {
 			console.log(e);
@@ -108,7 +109,7 @@ export default function Home ({ data }) {
 					</p>
 
 					<div className={styles.grid}>
-						<SpaceList context={pictures} handleAdd={addFav} handleRemove={removeFav} icon={<FiHeart />} />
+						<SpaceList context={spaceData} handleAdd={addFav} handleRemove={removeFav} icon={<FiHeart />} />
 					</div>
 
 					<button className={`${styles.likeBtn} ${styles.moreBtn}`} onClick={() => getMoreItems()}>

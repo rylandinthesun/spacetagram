@@ -5,7 +5,8 @@ module.exports = {
 		domains : [
 			'apod.nasa.gov',
 			'img.youtube.com',
-			'www.youtube.com'
+			'www.youtube.com',
+			'www.salonlfc.com'
 		]
 	}
 };

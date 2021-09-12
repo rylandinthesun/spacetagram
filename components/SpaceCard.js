@@ -21,16 +21,25 @@ const SpaceCard = ({
 			<a href={url} target="_blank" rel="noopener noreferrer">
 				{media_type === 'video' ? (
 					<Image
-						src={thumbnail_url}
+						src={
+							thumbnail_url ||
+							'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png'
+						}
 						alt={`Picture of ${title}`}
 						width={400}
 						height={400}
 						objectFit="cover"
-						priority
 						quality={50}
 					/>
 				) : (
-					<Image src={url} alt={`Picture of ${title}`} width={400} height={400} objectFit="cover" priority />
+					<Image
+						src={url || 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png'}
+						alt={`Picture of ${title}`}
+						width={400}
+						height={400}
+						objectFit="cover"
+						quality={50}
+					/>
 				)}
 			</a>
 			<div className={styles.cardTitle}>
