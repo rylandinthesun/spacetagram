@@ -1,6 +1,6 @@
 # Shopify Front End Developer Intern Challenge - Spacetagram
 
-Live Site URL: [Spacetagram](https://spacetagram.vercel.app/)
+Live Site URL: [Spacetagram](https://elated-lalande-f87f3d.netlify.app/)
 
 ### Built with
 

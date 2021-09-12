@@ -8,5 +8,7 @@ module.exports = {
 			'www.youtube.com',
 			'www.salonlfc.com'
 		]
-	}
+	},
+
+	target          : 'serverless'
 };
