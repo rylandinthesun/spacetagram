@@ -50,13 +50,18 @@ const Likes = () => {
 						<span>Likes</span>
 					</h1>
 
+					{spaceFavs.length === 0 && <p className={styles.description}>You haven't added any likes yet 🪐</p>}
+
 					<div className={styles.grid}>
 						<SpaceList context={spaceFavs} handleRemove={removeFav} icon={<FaHeart />} />
 					</div>
 				</main>
-				<button className={`${styles.likeBtn} ${styles.clearBtn}`} onClick={() => clearLikes()}>
-					Clear All Likes
-				</button>
+
+				{spaceFavs.length >= 1 && (
+					<button className={`${styles.likeBtn} ${styles.clearBtn}`} onClick={() => clearLikes()}>
+						Clear All Likes
+					</button>
+				)}
 			</div>
 		</div>
 	);
