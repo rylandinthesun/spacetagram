@@ -31,6 +31,11 @@
 .navbar ul li svg {
 	padding-top: 0.4rem;
 	color: darkslateblue;
+	transition: 150ms;
+}
+
+.navbar ul li svg:hover {
+	filter: brightness(75%);
 }
 
 .likeBtn {
@@ -84,7 +89,7 @@
 }
 
 .description a {
-	color: steelblue;
+	color: darkslateblue;
 	transition: 150ms;
 }
 
