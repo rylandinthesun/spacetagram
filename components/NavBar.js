@@ -1,19 +1,25 @@
 import { IoMdPlanet } from 'react-icons/io';
 import { FaHeart } from 'react-icons/fa';
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
-const NavBar = ({ spaceFavs, showLikes, likes }) => {
+const NavBar = () => {
 	return (
 		<nav className={styles.navbar}>
 			<ul>
 				<li>
-					<IoMdPlanet />
+					<Link href="/">
+						<a>
+							<IoMdPlanet />
+						</a>
+					</Link>
 				</li>
-				{spaceFavs.length >= 1 ? (
-					<button onClick={() => showLikes()} className={styles.likeBtn}>
-						{likes ? 'Home' : <FaHeart />}
+
+				<Link href="/likes">
+					<button className={styles.likeBtn}>
+						<FaHeart />
 					</button>
-				) : null}
+				</Link>
 			</ul>
 		</nav>
 	);

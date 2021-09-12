@@ -1,10 +1,7 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { FaHeart } from 'react-icons/fa';
 import { FiHeart } from 'react-icons/fi';
-import NavBar from '../components/NavBar';
-import SpaceCard from '../components/SpaceCard';
+import SpaceList from '../components/SpaceList';
 import styles from '../styles/Home.module.css';
 
 export default function Home ({ data }) {
@@ -19,13 +16,8 @@ export default function Home ({ data }) {
 	] = useState([]);
 
 	const [
-		likes,
-		setLikes
-	] = useState(false);
-
-	const [
-		icon,
-		setIcon
+		loading,
+		setLoading
 	] = useState(false);
 
 	useEffect(() => {
@@ -42,33 +34,62 @@ export default function Home ({ data }) {
 		localStorage.setItem('spacetagram-favs', JSON.stringify(items));
 	};
 
-	const addFav = (spaceItem) => {
-		const newFav = [
-			...spaceFavs,
-			spaceItem
+	const addFav = (item) => {
+		if (spaceFavs.some((el) => el.title === item.title)) {
+			return;
+		}
+		else {
+			const newKey = { liked: true };
+			item = { ...item, ...newKey };
+			const newFav = [
+				...spaceFavs,
+				item
+			];
+			const objIdx = pictures.findIndex((obj) => obj.title == item.title);
+			const updatedObj = { ...pictures[objIdx], liked: true };
+			const newPicFav = [
+				...pictures.slice(0, objIdx),
+				updatedObj,
+				...pictures.slice(objIdx + 1)
+			];
+			setSpaceFavs(newFav);
+			saveToLocalStorage(newFav);
+			setPictures(newPicFav);
+		}
+	};
+
+	const removeFav = (item) => {
+		const newFav = spaceFavs.filter((f) => f.title !== item.title && f.date !== item.date);
+		const objIdx = pictures.findIndex((obj) => obj.title == item.title);
+		const updatedObj = { ...pictures[objIdx], liked: false };
+		const newPicFav = [
+			...pictures.slice(0, objIdx),
+			updatedObj,
+			...pictures.slice(objIdx + 1)
 		];
-		setSpaceFavs(newFav);
-		saveToLocalStorage(newFav);
-		setIcon(!icon);
-	};
-
-	const removeFav = (title, date) => {
-		const newFav = spaceFavs.filter((f) => f.title !== title && f.date !== date);
 
 		setSpaceFavs(newFav);
 		saveToLocalStorage(newFav);
-		setIcon(!icon);
+		setPictures(newPicFav);
 	};
 
-	const showLikes = () => {
-		setLikes(!likes);
+	const getMoreItems = async () => {
+		try {
+			setLoading(!loading);
+			const res = await fetch(
+				'https://api.nasa.gov/planetary/apod?api_key=bwQwkRMCuNfINAZVluomxyUm0cTSPSKdIAbZwtoA&count=9&thumbs=true'
+			);
+			const data = await res.json();
+			const newItems = pictures.concat(data);
+			setPictures(newItems);
+			setLoading(false);
+		} catch (e) {
+			console.log(e);
+		}
 	};
-
-	const match = spaceFavs.filter((e) => pictures.some((e2) => e2.title === e.title && e2.date === e.date));
 
 	return (
 		<div>
-			<NavBar spaceFavs={spaceFavs} showLikes={showLikes} likes={likes} />
 			<div className={styles.container}>
 				<Head>
 					<title>Spacestagram App</title>
@@ -77,80 +98,35 @@ export default function Home ({ data }) {
 				</Head>
 
 				<main className={styles.main}>
-					{likes ? (
-						<h1 className={styles.title}>
-							<span>Likes</span>
-						</h1>
-					) : (
-						<h1 className={styles.title}>
-							Welcome to <span>Spacestagram!</span>
-						</h1>
-					)}
+					<h1 className={styles.title}>
+						Welcome to <span>Spacestagram!</span>
+					</h1>
 
-					{!likes && (
-						<p className={styles.description}>
-							Like and unlike pictures of <strong>SPACE</strong> provided by{' '}
-							<a href="https://api.nasa.gov/#apod">NASA's API!</a>
-						</p>
-					)}
+					<p className={styles.description}>
+						Like and unlike pictures of <strong>SPACE</strong> provided by the {' '}
+						<a href="https://api.nasa.gov/#apod">NASA's API!</a>
+					</p>
 
-					{likes ? (
-						<div className={styles.grid}>
-							{spaceFavs.map((pic, idx) => (
-								<SpaceCard
-									pic={pic}
-									addFav={addFav}
-									removeFav={removeFav}
-									key={`${pic.date}-${idx}`}
-									url={pic.url}
-									media_type={pic.media_type}
-									thumbnail_url={pic.thumbnail_url}
-									title={pic.title}
-									date={pic.date}
-									explanation={pic.explanation}
-									icon={icon}
-								/>
-							))}
-						</div>
-					) : (
-						<div className={styles.grid}>
-							{pictures.map((pic, idx) => (
-								<SpaceCard
-									pic={pic}
-									addFav={addFav}
-									removeFav={removeFav}
-									key={`${pic.date}-${idx}`}
-									url={pic.url}
-									media_type={pic.media_type}
-									thumbnail_url={pic.thumbnail_url}
-									title={pic.title}
-									date={pic.date}
-									explanation={pic.explanation}
-									icon={icon}
-								/>
-							))}
-						</div>
-					)}
+					<div className={styles.grid}>
+						<SpaceList context={pictures} handleAdd={addFav} handleRemove={removeFav} icon={<FiHeart />} />
+					</div>
+
+					<button className={`${styles.likeBtn} ${styles.moreBtn}`} onClick={() => getMoreItems()}>
+						{loading ? (
+							<span>
+								Loading...<div />
+							</span>
+						) : (
+							'More'
+						)}
+					</button>
 				</main>
-
-				<footer className={styles.footer}>
-					<a
-						href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Powered by{' '}
-						<span className={styles.logo}>
-							<Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-						</span>
-					</a>
-				</footer>
 			</div>
 		</div>
 	);
 }
 
-export async function getServerSideProps () {
+export async function getStaticProps () {
 	try {
 		const res = await fetch(
 			'https://api.nasa.gov/planetary/apod?api_key=bwQwkRMCuNfINAZVluomxyUm0cTSPSKdIAbZwtoA&count=9&thumbs=true'

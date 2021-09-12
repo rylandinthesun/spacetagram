@@ -1,9 +1,21 @@
 import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
+import { FiHeart } from 'react-icons/fi';
+import styles from '../styles/Home.module.css';
 
-const SpaceCard = ({ pic, addFav, removeFav, date, media_type, title, url, thumbnail_url, explanation, icon }) => {
+const SpaceCard = ({
+	date,
+	media_type,
+	title,
+	url,
+	thumbnail_url,
+	explanation,
+	context,
+	handleAdd,
+	handleRemove,
+	icon,
+	liked
+}) => {
 	return (
 		<div className={styles.card}>
 			<a href={url} target="_blank" rel="noopener noreferrer">
@@ -15,6 +27,7 @@ const SpaceCard = ({ pic, addFav, removeFav, date, media_type, title, url, thumb
 						height={400}
 						objectFit="cover"
 						priority
+						quality={50}
 					/>
 				) : (
 					<Image src={url} alt={`Picture of ${title}`} width={400} height={400} objectFit="cover" priority />
@@ -22,19 +35,18 @@ const SpaceCard = ({ pic, addFav, removeFav, date, media_type, title, url, thumb
 			</a>
 			<div className={styles.cardTitle}>
 				<h4>{title}</h4>
-
-				{icon ? (
-					<div onClick={() => removeFav(title, date)}>
+				{liked ? (
+					<div onClick={() => handleRemove(context)}>
 						<FaHeart />
 					</div>
 				) : (
-					<div onClick={() => addFav(pic)}>
+					<div onClick={() => handleAdd(context)}>
 						<FiHeart />
 					</div>
 				)}
 			</div>
 			<p className={styles.explanation}>{explanation}</p>
-			<div className={styles.date}>{date.split('-').join('/')}</div>
+			<div className={styles.date}>{date}</div>
 		</div>
 	);
 };
