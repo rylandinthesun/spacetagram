@@ -54,7 +54,9 @@ const SpaceCard = ({
 				)}
 			</div>
 			<p className={styles.explanation}>{explanation}</p>
-			<div className={styles.date}>{date}</div>
+			<div className={styles.date}>
+				Taken on: <span>{date.split('-').join('/')}</span>
+			</div>
 		</div>
 	);
 };
