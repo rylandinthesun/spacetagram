@@ -127,7 +127,7 @@ export default function Home ({ data }) {
 	);
 }
 
-export async function getStaticProps () {
+export async function getServerSideProps () {
 	try {
 		const res = await fetch(
 			'https://api.nasa.gov/planetary/apod?api_key=bwQwkRMCuNfINAZVluomxyUm0cTSPSKdIAbZwtoA&count=9&thumbs=true'
