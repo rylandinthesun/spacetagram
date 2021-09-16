@@ -47,11 +47,11 @@ const Likes = () => {
 
 				<main className={styles.main}>
 					<h1 className={styles.title}>
-						<span>Likes</span>
+						<span>Likes</span>✨
 					</h1>
 
 					{spaceFavs.length === 0 && (
-						<p className={styles.description}>You haven&apos;t added any likes yet 🪐</p>
+						<p className={styles.description}>You haven&apos;t added any likes yet 👾</p>
 					)}
 
 					<div className={styles.grid}>

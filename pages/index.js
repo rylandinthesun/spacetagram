@@ -100,7 +100,7 @@ export default function Home ({ data }) {
 
 				<main className={styles.main}>
 					<h1 className={styles.title}>
-						Welcome to <span>Spacestagram!</span>
+						Welcome to <span>Spacestagram!</span>🪐
 					</h1>
 
 					<p className={styles.description}>

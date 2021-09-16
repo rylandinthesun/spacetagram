@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { FiHeart } from 'react-icons/fi';
 import styles from '../styles/Home.module.css';
@@ -15,6 +16,11 @@ const SpaceCard = ({
 	handleRemove,
 	liked
 }) => {
+	const [
+		showDesc,
+		setShowDesc
+	] = useState(false);
+
 	return (
 		<div className={styles.card}>
 			<a href={url} target="_blank" rel="noopener noreferrer">
@@ -42,7 +48,13 @@ const SpaceCard = ({
 				)}
 			</a>
 			<div className={styles.cardTitle}>
-				<h4>{title}</h4>
+				<h4>
+					{title}
+					<div className={styles.date}>
+						Taken on: <span>{date.split('-').join('/')}</span>
+					</div>
+				</h4>
+
 				{liked ? (
 					<div onClick={() => handleRemove(context)}>
 						<FaHeart />
@@ -53,10 +65,10 @@ const SpaceCard = ({
 					</div>
 				)}
 			</div>
-			<p className={styles.explanation}>{explanation}</p>
-			<div className={styles.date}>
-				Taken on: <span>{date.split('-').join('/')}</span>
-			</div>
+			<button className={styles.showExpBtn} onClick={() => setShowDesc(!showDesc)}>
+				{showDesc ? 'Close Explanation' : 'Show Explanation'}
+			</button>
+			{showDesc && <p className={styles.explanation}>{explanation}</p>}
 		</div>
 	);
 };
