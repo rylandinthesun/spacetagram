@@ -105,7 +105,7 @@ export default function Home ({ data }) {
 
 					<p className={styles.description}>
 						Like and unlike pictures of <strong>SPACE</strong> provided by the {' '}
-						<a href="https://api.nasa.gov/#apod">NASA&apos;s API!</a>
+						<a href="https://api.nasa.gov/#apod">NASA API!</a>
 					</p>
 
 					<div className={styles.grid}>
